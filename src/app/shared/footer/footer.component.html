@@ -1,0 +1,13 @@
+<div class="centered">
+    @switch (route) { @case ("/dashboard") {
+    <div class="footer-container right">
+      <button routerLink="/privacy-policy">Privacy Policy</button>
+      <button routerLink="/imprint">Imprint</button>
+    </div>
+    } @default {
+    <div class="footer-container">
+      <button routerLink="/privacy-policy">Privacy Policy</button>
+      <button routerLink="/imprint">Imprint</button>
+    </div>
+    } }
+  </div>

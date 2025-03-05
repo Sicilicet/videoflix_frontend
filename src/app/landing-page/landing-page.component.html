@@ -1,3 +1,5 @@
+<app-header class="header" (redirectLogin)="redirectLogin()"></app-header>
+
 <div class="background-black"></div>
 
 <div class="background">
@@ -10,8 +12,16 @@
     <h3>Watch whenever you want wherever you want</h3>
     <h4>Enter your email to create or restart your subcription.</h4>
     <div class="sign-up">
-      <input type="email" class="input-email" placeholder="Email Address" />
-      <button class="standard-button">Sign Up ></button>
+      <input
+        type="email"
+        class="input-email"
+        placeholder="Email Address"
+        [(ngModel)]="inputData"
+      />
+      <button class="standard-button" (click)="redirectLogin()">
+        Sign Up >
+      </button>
     </div>
   </div>
+  <app-footer class="footer"></app-footer>
 </div>
