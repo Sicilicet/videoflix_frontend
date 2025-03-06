@@ -1,11 +1,7 @@
 <div class="centered">
   @switch (route) { @case ("/login") {
   <div class="header-container cursor-pointer" routerLink="/">
-    <img
-      src="assets/images/logo.svg"
-      alt=""
-      class="logo-default cursor-pointer"
-    />
+    <img src="assets/images/logo.svg" alt="" class="logo-default cursor-pointer"/>
     <img
       src="assets/images/logo_image.svg"
       alt=""
@@ -22,31 +18,31 @@
       class="cursor-pointer logo-default"
     />
     <img
-      src="assets/images/logo_image.svg"
-      alt=""
-      routerLink="/dashboard"
-      class="cursor-pointer logo-responsive"
-    />
+    src="assets/images/logo_image.svg"
+    alt=""
+    routerLink="/dashboard"
+    class="cursor-pointer logo-responsive"
+  />
     <button class="standard-button">
       <img src="assets/icons/logout.svg" alt="" />Logout
     </button>
   </div>
   } @case ("/hero") {
-  <div class="header-container">
-    <img
-      src="assets/images/logo_image.svg"
-      alt=""
-      routerLink="/dashboard"
-      class="cursor-pointer logo-default logo-responsive"
-    />
-    <button
-      class="standard-button transparent"
-      (click)="sendRedirectDashboard()"
-    >
-      <img src="assets/icons/arrow_back.svg" alt="" />
-    </button>
-  </div>
-  } @case ("/imprint") {
+    <div class="header-container">
+      <img
+        src="assets/images/logo_image.svg"
+        alt=""
+        routerLink="/dashboard"
+        class="cursor-pointer logo-default logo-responsive"
+      />
+      <button class="standard-button transparent" (click)="sendRedirectDashboard()">
+        <img src="assets/icons/arrow_back.svg" alt="" />
+      </button>
+    </div>
+    }
+  
+  
+  @case ("/imprint") {
   <div class="header-container">
     <img
       src="assets/images/logo.svg"

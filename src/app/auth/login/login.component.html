@@ -1,0 +1,95 @@
+<app-header class="header"></app-header>
+
+<div class="background-black"></div>
+
+<div class="background" [@backgroundFadeTrigger]="backgroundState">
+  <div class="curtain"></div>
+</div>
+
+<form [formGroup]="form">
+  <div class="main-container">
+    <div class="flex-1">
+      <div class="login-container" [@hideShowTrigger]="state">
+        <h1>Login</h1>
+
+        <div class="form-group">
+          <input
+            type="text"
+            formControlName="email"
+            class="input-field"
+            [ngClass]="{ 'is-invalid': submitted && f['email'].errors }"
+            placeholder="Email Address"
+          />
+          @if (submitted && f['email'].errors) {
+          <div class="invalid-feedback">
+            @if (f['email'].errors['required']) {
+            <div>Email is required</div>
+            } @if (f['email'].errors['pattern']) {
+            <div>Email is invalid</div>
+            }
+          </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <input
+            [type]="passwordVisible ? 'text' : 'password'"
+            formControlName="password"
+            class="input-field"
+            [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"
+            placeholder="Password"
+            #passwordField
+          />
+          @if (submitted && f['password'].errors) {
+          <div class="invalid-feedback">
+            @if (f['password'].errors['required']) {
+            <div>Password is required</div>
+            }
+          </div>
+          }
+
+          <img
+            class="toggle-password"
+            src="assets/icons/visibility.svg"
+            alt="show password"
+            (click)="togglePasswordVisibility()"
+          />
+
+          <div class="form-group form-remember-me">
+            <input type="checkbox" class="cursor-pointer" />
+            <label for="rememberMe" class="remember-me">Remember me</label>
+          </div>
+        </div>
+
+        <div class="form-group submit-button-container">
+          <button
+            type="submit"
+            class="standard-button"
+            [ngClass]="{ 'button-disabled': formEmpty }"
+            [disabled]="buttonSubmitDisabled"
+          >
+            Login
+          </button>
+        </div>
+        <button
+          class="button-no-outline"
+          type="button"
+          (click)="redirect('/forgot-password')"
+        >
+          Forgot password?
+        </button>
+        <div class="new-user">
+          <span class="legal">New to Videoflix?</span>
+          <button
+            class="button-no-outline"
+            type="button"
+            (click)="redirect('/sign-up')"
+          >
+            Sign up now
+          </button>
+        </div>
+      </div>
+    </div>
+    <app-footer class="footer"></app-footer>
+  </div>
+</form>

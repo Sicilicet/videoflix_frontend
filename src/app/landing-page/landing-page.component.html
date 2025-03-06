@@ -2,16 +2,20 @@
 
 <div class="background-black"></div>
 
-<div class="background">
+<div class="background" [@backgroundFadeTrigger]="backgroundState">
   <div class="curtain"></div>
 </div>
 
 <div class="main-container">
   <div class="flex-1">
-    <h1>Movies, TV shows, and more</h1>
-    <h3>Watch whenever you want wherever you want</h3>
-    <h4>Enter your email to create or restart your subcription.</h4>
-    <div class="sign-up">
+    <h1 [@hideShowTrigger]="state">Movies, TV shows, and more</h1>
+    <h3 [@hideShowTrigger]="state">
+      Watch whenever you want wherever you want
+    </h3>
+    <h4 [@hideShowTrigger]="state">
+      Enter your email to create or restart your subcription.
+    </h4>
+    <div class="sign-up" [@hideShowTrigger]="state">
       <input
         type="email"
         class="input-email"
