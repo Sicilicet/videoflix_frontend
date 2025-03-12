@@ -35,6 +35,14 @@ h4 {
   font-size: 18px;
 }
 
+p {
+  color: white;
+  margin: 0;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 21px;
+}
+
 .standard-button {
   border-radius: 40px;
   border: none;
@@ -119,6 +127,12 @@ h4 {
     font-size: 16px;
     color: $error;
   }
+}
+
+.legal {
+  margin: 0;
+  font-weight: 500;
+  font-size: 18px;
 }
 
 @media (max-width: 769px) {

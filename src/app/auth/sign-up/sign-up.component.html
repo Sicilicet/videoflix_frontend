@@ -1,0 +1,106 @@
+<app-header class="header" (redirectLogin)="redirect('/login')"></app-header>
+
+<div class="background-black"></div>
+
+<div class="background" [@backgroundFadeTrigger]="backgroundState">
+  <div class="curtain"></div>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="main-container">
+    <div class="flex-1">
+      <div class="sign-up-container" [@hideShowTrigger]="state">
+        <h1>Sign Up</h1>
+
+        <div class="form-group">
+          <input
+            type="text"
+            formControlName="email"
+            class="input-field"
+            [ngClass]="{ 'is-invalid': submitted && f['email'].errors }"
+            placeholder="Email Address"
+          />
+          @if (submitted && f['email'].errors) {
+          <div class="invalid-feedback">
+            @if (f['email'].errors['required']) {
+            <div>Email is required</div>
+            } @if (f['email'].errors['pattern']) {
+            <div>Email is invalid</div>
+            }
+          </div>
+          }
+        </div>
+
+        <div class="form-group">
+          <input
+            [type]="passwordVisible ? 'text' : 'password'"
+            formControlName="password"
+            class="input-field"
+            [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"
+            placeholder="Enter a password"
+            #passwordField
+          />
+          @if (submitted && f['password'].errors) {
+          <div class="invalid-feedback">
+            @if (f['password'].errors['required']) {
+            <div>Password is required</div>
+            } @if (f['password'].errors['minlength']) {
+            <div>Password must be at least 8 characters</div>
+            } @if (f['password'].errors['maxlength']) {
+            <div>Password must be no longer than 40 characters</div>
+            }
+          </div>
+          }
+
+          <img
+            class="toggle-password"
+            src="assets/icons/visibility.svg"
+            alt="show password"
+            (click)="togglePasswordVisibility()"
+          />
+        </div>
+
+        <div class="form-group">
+          <input
+            [type]="passwordVisible ? 'text' : 'password'"
+            formControlName="confirmPassword"
+            class="input-field"
+            [ngClass]="{
+              'is-invalid': submitted && f['confirmPassword'].errors
+            }"
+            placeholder="Confirm password"
+            #passwordField
+          />
+          @if (submitted && f['confirmPassword'].errors) {
+          <div class="invalid-feedback">
+            @if (f['confirmPassword'].errors['required']) {
+            <div>Confirm Password is required</div>
+            } @if (f['confirmPassword'].errors['matching']) {
+            <div>Passwords must match</div>
+            }
+          </div>
+          }
+
+          <img
+            class="toggle-password"
+            src="assets/icons/visibility.svg"
+            alt="show password"
+            (click)="togglePasswordVisibility()"
+          />
+        </div>
+
+        <div class="form-group submit-button-container">
+          <button
+            type="submit"
+            class="standard-button"
+            [ngClass]="{ 'button-disabled': formEmpty }"
+            [disabled]="buttonSubmitDisabled"
+          >
+            Get Started
+          </button>
+        </div>
+      </div>
+    </div>
+    <app-footer class="footer"></app-footer>
+  </div>
+</form>

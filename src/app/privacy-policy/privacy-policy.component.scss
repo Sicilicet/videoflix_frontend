@@ -1,0 +1,25 @@
+::ng-deep body {
+  background-color: black;
+}
+
+.privacy-policy-container {
+  padding: 24px 96px;
+  max-width: 1440px;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-bottom: 12px;
+}
+
+li {
+  color: white;
+}
+
+@media (max-width: 769px) {
+  .privacy-policy-container {
+    padding: 24px 16px;
+  }
+}
