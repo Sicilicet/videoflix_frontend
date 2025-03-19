@@ -1,0 +1,28 @@
+<app-header class="header" (redirectLogin)="redirect('/login')"></app-header>
+
+<div class="background-black"></div>
+
+<div class="background" [@backgroundFadeTrigger]="backgroundState">
+  <div class="curtain"></div>
+</div>
+
+<div class="main-container">
+  <div class="flex-1">
+    <div class="verification-container" [@hideShowTrigger]="state">
+      <h1>Email verification</h1>
+
+      <p>Thank you for verifing your email address. You are ready to login.</p>
+
+      <div class="form-group submit-button-container">
+        <button
+          type="button"
+          class="standard-button"
+          (click)="redirect('login/')"
+        >
+          Login
+        </button>
+      </div>
+    </div>
+  </div>
+  <app-footer class="footer"></app-footer>
+</div>
