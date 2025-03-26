@@ -1,0 +1,53 @@
+@import "./../../../../styles.scss";
+
+.button-mobile {
+    display: none;
+}
+
+.error-container {
+  background-color: $purple;
+  border-left: 20px solid $error;
+  border-radius: 20px;
+  padding: 24px 32px 24px 8px;
+}
+
+.desktop-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.divider-line {
+  height: 32px;
+  width: 1px;
+  background-color: white;
+}
+
+.background-white {
+  background-color: white;
+  color: $purple;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+@media (max-width: 769px) {
+  .error-container {
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px 20px 0 0;
+    border-left: unset;
+    border-top: 20px solid $error;
+    padding: 24px 16px 32px 16px;
+    gap: 16px;
+    align-items: center;
+  }
+  .divider-line,
+  .button-desktop {
+    display: none;
+  }
+  .button-mobile {
+    display: flex;
+  }
+}

@@ -4,6 +4,10 @@ import { Router } from '@angular/router';
 import { take } from 'rxjs';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { FooterComponent } from '../../shared/footer/footer.component';
+import { LandingPageService } from '../../services/landing-page.service';
+import { AuthenticationService } from '../../services/authentication.service';
+import { ToastService } from '../../services/toast.service';
+import { ToastCTA } from '../../interfaces/toast-cta';
 import {
   AbstractControl,
   FormBuilder,
@@ -60,6 +64,9 @@ import {
 })
 export class LoginComponent {
   router = inject(Router);
+  landingPageService = inject(LandingPageService);
+  toastService = inject(ToastService);
+  authenticationService = inject(AuthenticationService);
 
   form: FormGroup = new FormGroup({
     email: new FormControl(''),
@@ -75,6 +82,32 @@ export class LoginComponent {
   constructor(private formBuilder: FormBuilder) {}
 
   /**
+   * This function builds the form and sets the value of the email field in case the user has entered anything on the landing page.
+   */
+  ngOnInit(): void {
+    this.buildForm();
+    this.setValueEmailField();
+  }
+
+  /**
+   * This function sets the validation form and the requieries.
+   */
+  buildForm() {
+    this.form = this.formBuilder.group({
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(
+            /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+          ),
+        ],
+      ],
+      password: ['', [Validators.required]],
+    });
+  }
+
+  /**
    * This function is a getter function to retrieve all form controls in the current form group.
    */
   get f(): { [key: string]: AbstractControl } {
@@ -86,6 +119,38 @@ export class LoginComponent {
    */
   get formEmpty() {
     return this.form.invalid || this.form.pristine;
+  }
+
+  /**
+   * This function sets the value of the email field depending on the value of the observable inputData.
+   */
+  setValueEmailField() {
+    this.landingPageService.inputData
+      .pipe(take(1))
+      .subscribe((inputDataLandingPage: string) => {
+        this.form.get('email')?.setValue(inputDataLandingPage);
+      });
+  }
+
+  /**
+   * This function submits the form if it is valid. If it is the password is logged in.
+   * @returns
+   */
+  async onSubmit(): Promise<void> {
+    this.submitted = true;
+    const email = this.form.value.email;
+    const password = this.form.value.password;
+
+    if (this.form.invalid) {
+      return;
+    }
+    this.buttonSubmitDisabled = true;
+    let success = await this.authenticationService.login(email, password);
+    if (success) {
+      this.redirect('/dashboard');
+    } else {
+      this.buttonSubmitDisabled = false;
+    }
   }
 
   /**

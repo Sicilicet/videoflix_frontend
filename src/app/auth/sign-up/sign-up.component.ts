@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { FooterComponent } from '../../shared/footer/footer.component';
+import Validation from '../../utils/validation';
+import { AuthenticationService } from '../../services/authentication.service';
 import {
   AbstractControl,
   FormBuilder,
@@ -58,6 +60,7 @@ import {
 })
 export class SignUpComponent {
   router = inject(Router);
+  authenticationService = inject(AuthenticationService);
 
   form: FormGroup = new FormGroup({
     email: new FormControl(''),
@@ -76,26 +79,31 @@ export class SignUpComponent {
    * This function sets the validation form and the requieries.
    */
   ngOnInit(): void {
-    this.form = this.formBuilder.group({
-      email: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(
-            /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-          ),
+    this.form = this.formBuilder.group(
+      {
+        email: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern(
+              /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+            ),
+          ],
         ],
-      ],
-      password: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(8),
-          Validators.maxLength(40),
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(8),
+            Validators.maxLength(40),
+          ],
         ],
-      ],
-      confirmPassword: ['', Validators.required],
-    });
+        confirmPassword: ['', Validators.required],
+      },
+      {
+        validators: [Validation.match('password', 'confirmPassword')],
+      }
+    );
   }
 
   /**
@@ -120,6 +128,17 @@ export class SignUpComponent {
     this.submitted = true;
     const email = this.form.value.email;
     const password = this.form.value.password;
+
+    if (this.form.invalid) {
+      return;
+    }
+    this.buttonSubmitDisabled = true;
+    let success = await this.authenticationService.signUp(email, password);
+    if (success) {
+      this.redirect('/login');
+    } else {
+      this.buttonSubmitDisabled = false;
+    }
   }
 
   /**

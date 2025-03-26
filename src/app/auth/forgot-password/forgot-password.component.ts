@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { FooterComponent } from '../../shared/footer/footer.component';
+import { AuthenticationService } from '../../services/authentication.service';
 import {
   AbstractControl,
   FormBuilder,
@@ -58,6 +59,7 @@ import {
 })
 export class ForgotPasswordComponent {
   router = inject(Router);
+  authenticationService = inject(AuthenticationService);
 
   form: FormGroup = new FormGroup({
     email: new FormControl(''),
@@ -98,6 +100,28 @@ export class ForgotPasswordComponent {
    */
   get formEmpty() {
     return this.form.invalid || this.form.pristine;
+  }
+
+  /**
+   * This function submits the form if it is valid. If it is the password email is resent.
+   * @returns
+   */
+  async onSubmit(): Promise<void> {
+    this.submitted = true;
+    const email = this.form.value.email;
+
+    if (this.form.invalid) {
+      return;
+    }
+    this.buttonSubmitDisabled = true;
+    let success = await this.authenticationService.sendResetPasswordEmail(
+      email
+    );
+    if (success) {
+      this.redirect('/login');
+    } else {
+      this.buttonSubmitDisabled = false;
+    }
   }
 
   /**

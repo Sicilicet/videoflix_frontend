@@ -1,7 +1,7 @@
 import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { Location } from '@angular/common';
-
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-header',
@@ -13,6 +13,7 @@ import { Location } from '@angular/common';
 export class HeaderComponent {
   router = inject(Router);
   location = inject(Location);
+  authenticationService = inject(AuthenticationService);
 
   route: string = '/login';
 
@@ -31,6 +32,14 @@ export class HeaderComponent {
    */
   goBack(): void {
     this.location.back();
+  }
+
+  /**
+   * This function calls the logout function from the authentication service. If the function returns true the user is redirected.
+   */
+  async logout() {
+    await this.authenticationService.logout();
+    this.sendRedirectLogin();
   }
 
   /**

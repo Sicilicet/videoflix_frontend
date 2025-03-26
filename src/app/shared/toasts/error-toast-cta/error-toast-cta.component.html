@@ -1,0 +1,25 @@
+<div class="error-container">
+    <div class="desktop-container">
+      <img src="assets/icons/exclamation_circle.svg" alt="" />
+      <p>{{ toastData.message }}</p>
+      <button
+        class="standard-button background-white button-desktop"
+        (click)="toastData.action()"
+      >
+        {{ toastData.textButton }}
+      </button>
+      <div class="divider-line"></div>
+      <img
+        src="assets/icons/close_small.svg"
+        alt=""
+        class="cursor-pointer"
+        (click)="closeToast()"
+      />
+    </div>
+    <button
+      class="standard-button background-white button-mobile"
+      (click)="toastData.action()"
+    >
+      {{ toastData.textButton }}
+    </button>
+  </div>

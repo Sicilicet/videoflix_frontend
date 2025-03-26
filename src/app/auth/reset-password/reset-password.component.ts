@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { FooterComponent } from '../../shared/footer/footer.component';
+import { AuthenticationService } from '../../services/authentication.service';
+import Validation from '../../utils/validation';
 import {
   AbstractControl,
   FormBuilder,
@@ -55,6 +57,7 @@ import {
 export class ResetPasswordComponent {
   router = inject(Router);
   route = inject(ActivatedRoute);
+  authenticationService = inject(AuthenticationService);
 
   form: FormGroup = new FormGroup({
     password: new FormControl(''),
@@ -70,6 +73,28 @@ export class ResetPasswordComponent {
   constructor(private formBuilder: FormBuilder) {}
 
   /**
+   * This function sets the validation form and the requieries.
+   */
+  ngOnInit(): void {
+    this.form = this.formBuilder.group(
+      {
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(8),
+            Validators.maxLength(40),
+          ],
+        ],
+        confirmPassword: ['', Validators.required],
+      },
+      {
+        validators: [Validation.match('password', 'confirmPassword')],
+      }
+    );
+  }
+
+  /**
    * This function is a getter function to retrieve all form controls in the current form group.
    */
   get f(): { [key: string]: AbstractControl } {
@@ -81,6 +106,32 @@ export class ResetPasswordComponent {
    */
   get formEmpty() {
     return this.form.invalid || this.form.pristine;
+  }
+
+  /**
+   * This function submits the form if it is valid. If it is the password is reset.
+   * @returns
+   */
+  async onSubmit(): Promise<void> {
+    this.submitted = true;
+    const password = this.form.value.password;
+    const token = this.route.snapshot.paramMap.get('token');
+
+    if (this.form.invalid) {
+      return;
+    }
+    this.buttonSubmitDisabled = true;
+    if (token) {
+      let success = await this.authenticationService.resetPassword(
+        password,
+        token
+      );
+      if (success) {
+        this.redirect('/login');
+      } else {
+        this.buttonSubmitDisabled = false;
+      }
+    }
   }
 
   /**

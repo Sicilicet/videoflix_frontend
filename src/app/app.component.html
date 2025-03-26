@@ -1,1 +1,10 @@
-<router-outlet></router-outlet>
+<router-outlet /> @if (isVisible) {<app-error-toast
+    class="error-toast"
+    [@slideInOut]="errorToastState"
+  ></app-error-toast
+  >} @if (isVisibleCTA) {
+  <app-error-toast-cta
+    class="error-toast"
+    [@slideInOut]="errorToastStateCTA"
+  ></app-error-toast-cta>
+  }

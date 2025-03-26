@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { FooterComponent } from '../../shared/footer/footer.component';
+import { AuthenticationService } from '../../services/authentication.service';
 import {
   trigger,
   state,
@@ -48,6 +49,7 @@ import {
 export class VerificationComponent {
   router = inject(Router);
   route = inject(ActivatedRoute);
+  authenticationService = inject(AuthenticationService);
 
   state = 'hidden-left';
   backgroundState = 'background-fade-out';
@@ -58,9 +60,13 @@ export class VerificationComponent {
   async ngOnInit(): Promise<void> {
     const token = this.route.snapshot.paramMap.get('token');
 
-    if (token || true) {
-      // Immer true, unabhängig vom Token
-      this.showSuccess();
+    if (token) {
+      const isVerified = await this.authenticationService.verificateEmail(
+        token
+      );
+      if (isVerified) {
+        this.showSuccess();
+      }
     }
   }
 

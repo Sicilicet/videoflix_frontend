@@ -6,7 +6,7 @@
   <div class="curtain"></div>
 </div>
 
-<form [formGroup]="form">
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="main-container">
     <div class="flex-1">
       <div class="login-container" [@hideShowTrigger]="state">
