@@ -7,7 +7,6 @@ import { FooterComponent } from '../../shared/footer/footer.component';
 import { LandingPageService } from '../../services/landing-page.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ToastService } from '../../services/toast.service';
-import { ToastCTA } from '../../interfaces/toast-cta';
 import {
   AbstractControl,
   FormBuilder,
@@ -62,7 +61,7 @@ import {
     ]),
   ],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit, AfterViewInit{
   router = inject(Router);
   landingPageService = inject(LandingPageService);
   toastService = inject(ToastService);

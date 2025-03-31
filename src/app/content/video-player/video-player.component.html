@@ -1,0 +1,112 @@
+<div class="video-container" #container>
+  <div class="header">
+    <div class="header-desktop">
+      <img
+        src="assets/icons/arrow_back.svg"
+        alt=""
+        (click)="redirectToDashboard()"
+        class="cursor-pointer"
+      />
+
+      <div class="resolution-buttons-container">
+        <button
+          class="resolution-buttons"
+          (click)="setVideoResolution(360)"
+          [ngClass]="{ active: videoResolution === 360 }"
+        >
+          Mobile
+        </button>
+        <button
+          class="resolution-buttons"
+          (click)="setVideoResolution(480)"
+          [ngClass]="{ active: videoResolution === 480 }"
+        >
+          SD
+        </button>
+        <button
+          class="resolution-buttons"
+          (click)="setVideoResolution(720)"
+          [ngClass]="{ active: videoResolution === 720 }"
+        >
+          HD
+        </button>
+        <button
+          class="resolution-buttons"
+          (click)="setVideoResolution(1080)"
+          [ngClass]="{ active: videoResolution === 1080 }"
+        >
+          UHD
+        </button>
+      </div>
+
+      <img src="assets/images/logo_image.svg" alt="" />
+    </div>
+
+    <div class="resolution-buttons-container-mobile">
+      <button
+        class="resolution-buttons"
+        (click)="setVideoResolution(360)"
+        [ngClass]="{ active: videoResolution === 360 }"
+      >
+        Mobile
+      </button>
+      <button
+        class="resolution-buttons"
+        (click)="setVideoResolution(480)"
+        [ngClass]="{ active: videoResolution === 480 }"
+      >
+        SD
+      </button>
+      <button
+        class="resolution-buttons"
+        (click)="setVideoResolution(720)"
+        [ngClass]="{ active: videoResolution === 720 }"
+      >
+        HD
+      </button>
+      <button
+        class="resolution-buttons"
+        (click)="setVideoResolution(1080)"
+        [ngClass]="{ active: videoResolution === 1080 }"
+      >
+        UHD
+      </button>
+    </div>
+  </div>
+
+  @if (showRestartConfirm) {
+  <div class="restart-continue">
+    <button class="standard-button" (click)="resetTimestamp()">Restart</button>
+    <button class="standard-button" (click)="continueVideo()">Continue</button>
+  </div>
+  } @else{ @if (videoService.selectedVideoData | async; as video) { @switch
+  (videoUrl) {@case ("") {
+  <span class="loading">Loading</span>
+  } @default {
+  <app-vjs-player
+    [ngStyle]="{ width: playerWidth }"
+    #videoPlayer
+    class="video-player"
+    [options]="{
+          fluid: true,
+          autoplay: false,
+          controls: true,
+          muted: false,
+          sources: [
+            { src: videoUrl, type: 'application/x-mpegURL', label: 'SD' }
+          ],
+        }"
+  ></app-vjs-player>
+  }}
+
+  <div class="footer">
+    <button class="forward-rewind-button" (click)="rewind()">
+      <img src="assets/icons/replay_10.svg" alt="" />
+    </button>
+    <span class="clip-title">{{ video.title }}</span>
+    <button class="forward-rewind-button" (click)="forward()">
+      <img src="assets/icons/forward_10.svg" alt="" />
+    </button>
+  </div>
+  }}
+</div>

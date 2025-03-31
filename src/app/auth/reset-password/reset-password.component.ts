@@ -54,7 +54,7 @@ import {
     ]),
   ],
 })
-export class ResetPasswordComponent {
+export class ResetPasswordComponent implements OnInit, AfterViewInit {
   router = inject(Router);
   route = inject(ActivatedRoute);
   authenticationService = inject(AuthenticationService);

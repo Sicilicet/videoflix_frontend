@@ -58,7 +58,7 @@ import {
     ]),
   ],
 })
-export class SignUpComponent {
+export class SignUpComponent implements OnInit, AfterViewInit{
   router = inject(Router);
   authenticationService = inject(AuthenticationService);
 

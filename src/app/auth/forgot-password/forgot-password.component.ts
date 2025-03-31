@@ -57,7 +57,7 @@ import {
     ]),
   ],
 })
-export class ForgotPasswordComponent {
+export class ForgotPasswordComponent implements OnInit, AfterViewInit {
   router = inject(Router);
   authenticationService = inject(AuthenticationService);
 

@@ -1,0 +1,33 @@
+<app-header
+  class="header"
+  (redirectDashboard)="redirectDashobard()"
+></app-header>
+
+<div class="background-black"></div>
+
+<div class="background" [@hideShowTeaser]="teaserState">
+  @if (videoService.heroVideoData | async; as video) {
+  <video autoplay class="hero-video" src="{{ baseUrl + video.teaser }}"></video>
+  }
+  <div class="curtain"></div>
+</div>
+
+<div class="centered">
+  <div class="main-container" [ngStyle]="{ overflow: overflowMainContainer }">
+    @if (videoService.heroVideoData | async; as video) {
+    <div class="hero">
+      <div class="title" [@hideShowTrigger]="state">{{ video.title }}</div>
+      <button
+        class="standard-button"
+        [@hideShowTrigger]="state"
+        (click)="openVideo('/video-player')"
+      >
+        <img src="assets/icons/play_arrow.svg" alt="" /> Play
+      </button>
+      <p [@hideShowTrigger]="state">
+        {{ video.description }}
+      </p>
+    </div>
+    }
+  </div>
+</div>

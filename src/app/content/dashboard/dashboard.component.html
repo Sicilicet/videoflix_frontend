@@ -1,0 +1,87 @@
+<app-header class="header" (redirectLogin)="logout()"></app-header>
+
+<div class="background-black"></div>
+
+<div
+  class="background"
+  [@hideShowTeaser]="teaserState"
+  [@zoomThumbnailTrigger]="zoomState"
+>
+  @if (videoService.heroVideoData | async; as video) {
+  <video autoplay class="hero-video" src="{{ baseUrl + video.teaser }}"></video>
+  }
+
+  <div class="curtain"></div>
+</div>
+
+<div class="curtain-bottom"></div>
+
+<div class="centered">
+  <div class="main-container">
+    @if (videoService.heroVideoData | async; as video) {
+    <div class="hero">
+      <div class="title" [@hideShowTrigger]="state">{{ video.title }}</div>
+      <p [@hideShowTrigger]="state">{{ video.description }}</p>
+      <button
+        class="standard-button"
+        [@hideShowTrigger]="state"
+        (click)="openVideo('/video-player')"
+      >
+        <img src="assets/icons/play_arrow.svg" alt="" /> Play
+      </button>
+    </div>
+    }
+
+    <div class="rows">
+      <div class="curtain-right"></div>
+      <div class="row">
+        <span class="subtitle">New on Videoflix</span>
+        <div class="thumbnails">
+          @if (videoService.dashboardData | async; as videos) { @for (video of
+          videos.latest_videos; track video.id; let i = $index) {
+          <img
+            src="{{ baseUrl + video.thumbnail }}"
+            alt="{{ video.thumbnail }}"
+            [@showThumbnailTrigger]="thumbnailState"
+            (click)="showHero(video.id)"
+          />
+          }}
+        </div>
+      </div>
+
+      @if (videoService.dashboardData | async; as videos) { @if
+      (videos.my_videos.length > 0) {
+      <div class="row">
+        <span class="subtitle">My videos</span>
+        <div class="thumbnails">
+          @for (video of videos.my_videos; track video.id; let i = $index) {
+          <img
+            src="{{ baseUrl + video.thumbnail }}"
+            alt="{{ video.thumbnail }}"
+            [@showThumbnailTrigger]="thumbnailState"
+            (click)="showHero(video.id)"
+          />
+          }
+        </div>
+      </div>
+      } } @if (videoService.dashboardData | async; as dashboardData) { @for
+      (category of dashboardData.categories; track $index) {
+      <div class="row">
+        <span class="subtitle">{{ this.upperCase(category) }}</span>
+        <div class="thumbnails">
+          @for (video of dashboardData.category_videos[category]; track
+          video.id; let i = $index) {
+          <img
+            src="{{ baseUrl + video.thumbnail }}"
+            alt="{{ video.thumbnail }}"
+            [@showThumbnailTrigger]="thumbnailState"
+            (click)="showHero(video.id)"
+          />
+          }
+        </div>
+      </div>
+      } }
+      <app-footer class="footer"></app-footer>
+    </div>
+  </div>
+</div>
