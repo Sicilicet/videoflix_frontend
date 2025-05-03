@@ -64,6 +64,18 @@ export class LandingPageComponent {
     }, 400);
   }
 
+    /**
+   * This function triggers the animation of the landing page and redirects to the Signup.
+   */
+    redirectSignUp() {
+      this.state = 'hidden-left';
+      this.backgroundState = 'background-fade-out';
+      this.landingPageService.setInputData(this.inputData);
+      setTimeout(() => {
+        this.router.navigate(['/sign-up']);
+      }, 400);
+    }
+
   /**
    * This function triggers the animation of the landing page after the page has loaded.
    */
