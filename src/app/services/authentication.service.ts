@@ -25,7 +25,7 @@ export class AuthenticationService {
    * @returns boolean
    */
   async signUp(email: string, password: string): Promise<boolean> {
-    const url = environment.baseUrl + '/registration/';
+    const url = environment.baseUrl + '/auth/registration/';
     const body = { email, password };
 
     try {
@@ -46,7 +46,7 @@ export class AuthenticationService {
    * @returns boolean
    */
   async verificateEmail(token: string): Promise<boolean> {
-    const url = environment.baseUrl + '/verification/';
+    const url = environment.baseUrl + '/auth/verification/';
     const body = { token };
 
     try {
@@ -91,7 +91,7 @@ export class AuthenticationService {
    * @returns boolean
    */
   async resendVerificationEmail(email: string): Promise<boolean> {
-    const url = environment.baseUrl + '/resend_verifiction/';
+    const url = environment.baseUrl + '/auth/resend_verifiction/';
     const body = { email };
 
     try {
@@ -110,7 +110,7 @@ export class AuthenticationService {
    * @returns boolean
    */
   async sendResetPasswordEmail(email: string): Promise<boolean> {
-    const url = environment.baseUrl + '/forgot_password/';
+    const url = environment.baseUrl + '/auth/forgot_password/';
     const body = { email };
 
     try {
@@ -130,7 +130,7 @@ export class AuthenticationService {
    * @returns boolean
    */
   async resetPassword(password: string, token: string): Promise<boolean> {
-    const url = environment.baseUrl + '/reset_password/';
+    const url = environment.baseUrl + '/auth/reset_password/';
     const body = { password, token };
 
     try {
@@ -152,7 +152,7 @@ export class AuthenticationService {
    * @returns boolean
    */
   async login(email: string, password: string): Promise<boolean> {
-    const url = environment.baseUrl + '/login/';
+    const url = environment.baseUrl + '/auth/login/';
     const body = { username: email, password };
     try {
       const response = await lastValueFrom(
@@ -186,7 +186,7 @@ export class AuthenticationService {
    * @returns boolean
    */
   async logout(): Promise<boolean> {
-    const url = environment.baseUrl + '/logout/';
+    const url = environment.baseUrl + '/auth/logout/';
     const body = {};
     const headers = getAuthHeaders();
     localStorage.removeItem('token');

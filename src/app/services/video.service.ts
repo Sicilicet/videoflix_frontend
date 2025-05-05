@@ -59,7 +59,7 @@ export class VideoService {
    * This function gets the data for the dashboard from the back end and stores it in the observable _dashboardData.
    */
   async getDashboardData() {
-    const url = environment.baseUrl + '/dashboard/';
+    const url = environment.baseUrl + '/content/dashboard/';
     const headers = getAuthHeaders();
 
     try {
@@ -76,7 +76,7 @@ export class VideoService {
    * This function gets the data for the hero area. The ID of the video is stored in the global variable selectedVideoId. It stores the data in the observable _heroVideoData.
    */
   async getHeroData() {
-    const url = environment.baseUrl + '/hero?id=' + this.selectedVideoId;
+    const url = environment.baseUrl + '/content/hero?id=' + this.selectedVideoId;
     const headers = getAuthHeaders();
     try {
       const response = await lastValueFrom(
@@ -97,7 +97,7 @@ export class VideoService {
     this.getVideoIdFromSessionStorage();
     const url =
       environment.baseUrl +
-      '/video?id=' +
+      '/content/video?id=' +
       this.selectedVideoId +
       '&resolution=' +
       videoResolution;
@@ -120,7 +120,7 @@ export class VideoService {
    */
   async storeWatchHistory(timestamp: number) {
     const video_id = this.selectedVideoId;
-    const url = environment.baseUrl + '/update_watch_history/';
+    const url = environment.baseUrl + '/watch//update_watch_history/';
     const headers = getAuthHeaders();
     const body = {
       timestamp,
