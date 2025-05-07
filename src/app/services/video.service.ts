@@ -120,7 +120,7 @@ export class VideoService {
    */
   async storeWatchHistory(timestamp: number) {
     const video_id = this.selectedVideoId;
-    const url = environment.baseUrl + '/watch//update_watch_history/';
+    const url = environment.baseUrl + '/watch/update_watch_history/';
     const headers = getAuthHeaders();
     const body = {
       timestamp,
